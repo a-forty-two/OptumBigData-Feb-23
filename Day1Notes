@@ -1,0 +1,112 @@
+
+Big Data Ecosystem- on premise v/s Cloud
+
+
+Day 1: Big Data Ecosystem (ETL v/s ELT)
+Day 2: PySpark and Scala (Notebooks)
+Day 3: Data Pipelines (Apache Beam/Data Factory)
+					- Batch (Data Warehouses) v/s Stream (Kafta & Storm)
+Day 4: Data Analysis and EDA 
+Day 5: Big Data ML (PySpark or Scala) [0.5 day]
+
+
+
+
+- Code-ful : PySpark and Scala (SQL)
+- CodeLess: 
+            - Azure: Data Factory, Synapse Pipelines 
+            - GCP: Data Fusion 
+
+- Apache Beam (ETL) 
+- Spark: theory 
+
+- Tool Based: Code + codeless (Machine Learning, Data Analysis) 
+
+
+
+
+Big Data-> data that is TOO BIG for 1 machine!
+
+Machine’s capacity = 2 numbers! 
+
+1, 2 and 3 -> big data!
+
+OLTP/SQL/MySQL/FS:
+
+M1-> 1, 2					—— replication ———   M3->.   1,2
+M2-> 3														  M4-> 3
+
+3 numbers = 4 machines!!!
+
+
+Sharding : (OLAP) [Collossus File System]
+
+Tablet -> 3 shards! [HADOOP]-> HDFS
+
+M1-> 1, 2				M2-> 2, 3				M3-> 3, 1
+
+
+3 numbers= 3 machines!
+
+
+Big data-> SHARDING!
+
+
+Fault Domain: no 2 machine sets will be unavailable at the same time!
+
+
+
+
+
+
+Problem: edit 2 into 4!
+Assumption: every ops takes 1ms!
+
+M1-> 1, 2					—— replication ———   M3->.   1,2
+M2-> 3														  M4-> 3
+
+
+			1st			2ms				3ms
+
+M1		NF			Found		Replace (2->4)		= 5ms (TOTAL CONSUMPTION!)
+M2		NF			-
+
+
+
+M1-> 1, 2				M2-> 2, 3				M3-> 3, 1
+
+			1st			2ms				3ms
+
+M1		NF			Found			Replace		= 8ms (TOTAL CONSUMPTION)
+M2		Found		Replace		NF
+M3		NF			NF				-
+
+
+Problem: search for 2!
+Assumption: every ops takes 1ms!
+
+M1-> 1, 2					—— replication ———   M3->.   1,2
+M2-> 3														  M4-> 3
+
+
+			1ms			2ms			3ms			4ms…	
+M1		NF			FOUND									= FASTEST= 2ms; total= 3ms
+M2		NF			-
+
+
+
+M1-> 1, 2				M2-> 2, 3				M3-> 3, 1
+
+			1st			2ms			3ms….
+M1		NF
+M2		FOUND												= FASTEST= 1ms; total= 3ms
+M3		NF
+
+
+EDIT-> OLTP
+SEARCH-> OLAP
+
+
+
+
+
