@@ -104,8 +104,65 @@ M3		NF
 
 
 EDIT-> OLTP
-SEARCH-> OLAP
+		-> Normalization-> 1st, 2nd , 3rd NF, BCNF
+					1st-> INDEX (no duplication)
+					2nd-> Foreign Keys (multiple tables, link them-> data integrity)
+					3rd NF-> RELATIONSHIP tables (1:1, 1:N, N:1, N:N…) 
 
+					Person, Hobby, Person_Hobby (P_P, P_H)
+					Inserting/Editing-> STORAGE [less space] and Integrity!!!!
+
+			SEARCHING-> JUMP, JOIN, SubQueries, Hops!!!!
+							TIME SUFFERS!!!!
+
+SEARCH-> OLAP
+		-> Denormalization-> Flat, star, snowflake
+				-> DUPLICATE RECORDS!!! SEARCHING-> duplication is more than welcome! SEARCH will be faster!!!
+
+
+2 kinds of data in OLAP: Dimensions and Facts!
+
+TIME->  DIMENSION!
+Event-> rainfall 5cm at 2pm and sun was present, and Pikachu drenched -> FACT!
+
+FACT-> multiple dimension-> rainfall, time, 
+
+Event (Fact Table)-> 2 dimensions-> rainfall, time, sun_presence, person, status
+
+
+Star: (The default of OLAP)
+									
+									SUN_presence
+										|
+			time ————		EVENTS ——— rainfall
+									/			\
+								person		status
+
+Snowflake : Heirarchy that supports OLTP and OLAP!
+
+		Sales Events:
+
+Sales-> Dynamic Discount-> Marketing Campaigns 			
+			
+users, sales_patterns, no_of_items, values							dimx, dimy	
+			|																					|
+			Fact_xyz				dim_pika										Fact ABC
+			|										|											|
+		Marketing_campaigns (FACTS) [startdate, end_date, no.of.views, HVC/LVC]
+			|
+Dynamic-discounts	_____ new_customers
+			|
+returning_customers
+
+			
+
+
+OLTP-> Batch-> JSON (nesting), CSV/TSV (further processing)
+			BAK-> Restore (backup/archive)
+
+
+Parquet, ORC, JSON/CSV, Binary (Blobs), [BATCH]
+AVRO, MQTT, AMQP [streaming]
 
 NoSQL Databases Created:
 
@@ -152,6 +209,141 @@ any changes-> NO CHANGES ARE MADE~!!!!! [ALL BIG DATA SYSTEM!]
 
 
 BFS, DFS (breadth first, depth first search)
-									
+									ABC
+					/					|					\	
+				Sales			Tech					Legal
+			/			\				|			|
+	Pre-Sales		Sales		Dev		devOps
+/
+Team1			
+
+
+
+Volume: Hadoop (Data Lake OS) (ON PREMISE!)= expensive, Hadoop administrator
+
+Cloud-> Azure Storage, GC Storage, S3 (Hadoop compliant)
+		-> dumping the hadoop data (entire FS) as-is!!!
+		-> Spark/ETL programs-> connection_strings
+					-> hdfs:// ——> adls://, s3://, gs://
+
+Hybrid-> cloud + on-premise
+
+Disadvantage of using Cloud storages over Hadoop:
+		-> No Support for REAL-TIME EVENTS!!
+				lowest latency-> OS directly! HADOOP!!!
+		-> Cloud Storages are FLAT and do not support HEIRARCHY
+				-> on cloud, no FOLDERS exist!!!!!!!!
+					-> folders exist only the UI not in reality!
+					-> just a file name!
+					-> data/team1/dev/back.csv
+				-> One exception: Azure-> offers 2 types of storages
+							- Flat storage: Azure Storage (blob storage)
+							- Data Lake (ADLS): blob storage+ Folders!
+		-> FOLDER SUPPORT-> Hadoop is the ONLY WAY!!!
+
+BFSI-> all the data on premise + apps run on cloud! (High availability for consumers)
+
+			all the data in unreadable format on the cloud; decrypting apps on premise!
+						(
+	
+
+
+On cloud Hadoop options (HADOOP OS instead of native cloud storage)
+		Azure: HDInsight, AWS: Elastic Mapreduce (EMR), GCP: DataProc
+
+
+ velocity: Batch and Stream
+	Batch: data at rest
+
+	Stream: data in motion
+
+
+
+Most important tools:
+
+			
+OS-> mass storage (BIG storage)-> Hadoop (HDFS)
+
+data will be stored on DISK (cheaper!)
+
+Faster processing-> Hadoop is GOING TO BE SLOW!!!
+
+Make it fast-> instead of disk, RAM (in-memory)
+
+Spark (In memory data processing), Hadoop or any hadoop-compliant 
+[volatile]											[persistent]
+
+SHARDING-> 1 TB is going to become 3 TB!!!
+
+Select only what you need to PROCESS!!
+
+total= 10 TB of data (HADOOP)
+
+BIGGEST QUERY-> was processing 500 GB of data in one-go!!!
+
+500 GB X replication_factor (3) = 1.5 TB of RAM
+	-> machine-> each machine 50 GB of RAM 
+							-> 1.5 TB/ 50GB = approx 30 machines!!!
+
+
+SCALABILTY-> planned (increasing by 5% every year!), Dec (spike of 25%)
+			[On premise, can go wrong]	
+			[on cloud, its in our control! fix it even if went wrong!]
+, ELASTICITY-> dynamic burst (100 users in hour 1, 500 in hour 2, 50 in hour 3)
+					-> dynamic cluster size and number of machines!!
+			[ On premise-> next to impossible!]
+			[ On cloud-> happens automatically, we need to provide min-max cluster size] 
+
+
+
+Spark —————————————————————— Hadoop 
+[In memory	Fast processing]         —              [In Disk, cheap storage]
+Volatile [restart clears the memory].  —- 		Persistent [data stays!]
+
+What is the data is not there???
+Bring it in!!
+
+Batch [data at rest]
+	-> SQL-> Apache HIVE
+	-> NoSQL or Unstructured!-> Apache HBase
+
+Stream [data in motion]
+	-> Producing data-> Apche Kafka
+	-> consuming/processing infinite streams-> Apache Storm
+
+
+
+Hadoop -> Big Data OS
+Spark-> In Memory Processing 
+HIVE-> Batch- SQL
+HBase-> Batch-NoSQL
+Storm-> Incoming Processing
+Kafka -> produce streaming data
+			-> radio antennae -> TOPICS-> write into topics; subscription can read from topic
+
+
+news app-> notification system		 [PUSH NOTIFICATION!]
+			-> all notifications
+			-> sport events
+			-> fashion events 
+
+3 topics-> all, sports, fashion
+
+new users-> download an app-> select their preferences
+		-> 1 subscription-> subscribe to my kafka topic 
+
+Kafka takes delivery guarantee between a TOPIC and a subscription
+		-> not a guarantee between topic and subscriber!
+
+
+
+
+
+
+
+
+
+
+
 
 
