@@ -107,6 +107,51 @@ EDIT-> OLTP
 SEARCH-> OLAP
 
 
+NoSQL Databases Created:
 
+1. Document Style: MongoDB 
+        1. BSON: Binary Script Object Notation 
+                1. { “name”: “Pikachu”, “age”: 23, “hobbies”: [ { }, { },…..] }
+        2. JSON - Information Interchange (NOT STORAGE)
+        3.  XML 
+
+2. Table (COLUMN oriented): HIVE, HBase, BigQuery, SQL DW, ….
+
+Idx 	Name		Age		Hobby
+1		Pikachu		23		Sleeping -> file1
+2		Jason		23		Reading	-> file2
+3		Pikachu		42		Reading	-> file3
+4		Random	42		Sleeping 	-> file4
+
+File system-> (IDX, FName)
+in columnar datastores:
+Every column is a separate file!!!
+Name-> { 1: Pikachu, 2: Jason, 3: Pikachu, 4: Random…}
+Age->	{1: 23, 2: 23, 3: 42, 4: 42}
+Hobby-> {….}
+
+Dictionary Encoding: {keys becomes values; values become keys!}
+
+Name: { Pikachu: [1,3], Jason: [2], Random: [4]}
+Age-> {23: [1, 2], 42: [3,4]}
+Hobby-> {sleeping: [1,4], reading: [2,3]}
+
+
+HBase-> 2 applications: Gmail (BigTable), Outlook and Google Analytics!!!
+
+Analytics-> SEARCH, NO EDITING
+Transactions-> EDITING, No SEARCHING!
+
+3. Graph Databases: Both transaction and analytics
+		Each node in the graph-> transactional
+		Graph itself-> Analytical
+
+any changes-> NO CHANGES ARE MADE~!!!!! [ALL BIG DATA SYSTEM!]
+		-> new node is created; previous one removed from the graph
+
+
+
+BFS, DFS (breadth first, depth first search)
+									
 
 
