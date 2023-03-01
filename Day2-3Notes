@@ -1,0 +1,193 @@
+
+
+Restaurant:
+GRID_SEARCH-> exhaustive combination of entire hyperspace
+hyperspace= search space for unknown combinations! 
+
+COST_FUNCTION = f(price)
+
+Pizza				Banana					Potato
+0.5				0.25						0.3
+1					0.6						2
+
+hunger = 1
+
+1 pizza, 2 bananas = 1 + 1.2 = 2.2
+
+2 pizza = 2
+
+4 bananas = 2.4
+Djisktra’s shortest path-> finite!
+
+
+no absolute answer! 
+Human -> able to detect temperature? 
+Cold/Hot? 
+Error rate, sensitivity of a device! 
+Randomized Search!
+Traveling salesman!
+
+-> graphs and charts predicitons, missing data imputation, incorrect data/faulty data-> correction!
+
+{ 
+		{ : [ ] }
+
+
+Data Lake  —>. Apache Spark (Bronze) —> (Silver) —> Gold —> Apache HIVE
+
+						——————————————————————
+							Delta changes in Schema = Delta Lake!
+
+Orchestration-> Databricks Notebook-> command line arguments!
+
+
+DataFactory/AirFlow/Terradata -> invoke and pass command line args!
+
+
+
+
+
+
+FS-> HDFS 
+Processing IN-MEMORY= Apache Spark
+					IN_MEM, IN_DISK, IN_MEM_DISK
+
+
+OLD WAY: LAMBDA ARCHITECTURE
+Batch:
+	HIVE: SQL, HBase: NoSQL, Gremlin (Graph)
+
+Stream:
+	Kafka
+
+NEW WAY: KAPPA ARCHITECTURE
+
+example: Delta Lake 
+			1) 3 layers-> Bronze, Silver, Gold
+						Bronze-> as-is dirty/raw data
+						Silver-> clean data
+						Gold-> mission specific-> AI, ML, DA, DE, Feature Engineering
+			2) SCHEMA manipulation; thru which data flows!
+		
+
+Unified-> Batch + Stream
+
+
+Singleton -> Task Manager
+	Spark-> Spark Context! (SC, Spark)
+						-> Spark Context-> In Memory
+						-> Stream Context-> session to read/write streams 
+						-> SQL Context/Hive Context 
+									-> SQL syntax can be used!
+
+1 2 3 4 5 -> 5
+
+5 6 7 1 2 -> 7
+
+Windows-> Aggregations!!!
+
+SORTING? 
+		-> Windowing; aggregation!
+ 
+
+On Premise:
+
+
+M1 -> writing (10 records/s) [KAFKA]
+[CLUSTER]
+
+M2-> 10 records-> [5] , [5] (2t) [BUFFER]
+		-> RAM, CPU-> even this will fill out!
+					-> all new records will be dropped!
+[CLUSTER]
+
+M10-> consuming (5 records/s) [SPARK]
+CLUSTER
+
+ 
+
+Snail-> 10m/s 
+ every second-> speed / 2
+
+in how much time will snail travel 20m? 
+
+(rephrase: when will 100% records be written???)
+
+
+
+On Cloud:
+
+Managed KAFKA
+
+Azure: Events Hub/ IoT Hub
+
+Google Cloud: Pub/Sub 
+
+AWS-> MSK
+
+INFINITE STREAMING!!!
+
+
+STREAM-> challenges!
+ 1) WINDOWS (aggregation/math/stats….)
+ 2) Buffering -> Apache Kafka (managed)
+					Event Hub, IoT Hub, Pub/Sub…..
+
+
+
+Every PCollection -> data structure to manage Batch + Stream 
+
+
+Date time stamps (DTS)
+
+Every event or transfromation on the data is recorded as a DTS (metadata) and made a part of our stream packet!!!
+
+LINEAGE = we are able to calculate latency (server side and client side!!!!)
+			= map out the exact flow and transformations 
+			= we can also find if a particular tool/platform in between has thorttled or is suffering from extra latency!!!
+
+
+wasbs -> all cases! (Spark, hadoop, Beam)
+
+
+adls://
+gs://
+s3://
+hdfs://1.2.3.4/ff/data/1.csv
+
+
+
+Delta-> Bronze | Silver | Gold (FOLDER)-> HIVE Table
+
+MySQL/MS SQL/PostGRE -> change management 
+
+Trigger-> time based, no. of records, manual, buckets 
+
+
+SQL —— Spark/Beam —— Hive 
+
+
+
+
+
+
+
+Cloud:
+
+Code-less: DataFactory -> also orchestrate Databricks and HDInsight and ML Services! Also ETL possible without any other product!
+	Source-> ANY (GCP, AWS, On-premise!)
+
+Code-ful
+
+Apache Spark: Local machine, cluster!
+
+Synpase Analytics (formerly SQL DW)
+		: Synpase Pipelines (DF with slightly diff UI!)
+		: Spark Engine! -> No installation or configs!
+
+Tuning/Optimization/Customization: 
+		HDInsight -> not just spark, entire Hadoop ecosystem!
+					-> HIVE, HBase, Kafka, Spark, ML….
+
+Databricks-> advanced and easier way of operating spark!
+				-> lots of inbuilt transformations
