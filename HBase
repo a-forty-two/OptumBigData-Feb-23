@@ -1,0 +1,20 @@
+# REMEMBER-> commands are very straightforward and simple
+
+# Our main objective-> SEARCH!!!!
+
+
+list -> lists all table objects
+
+
+status => gives you the cluster arrangement (master/workers)
+
+table_help -> shows you all possible ops on the table 
+
+
+scan 'current_conditions', {"LIMIT" => 2} -this command searches in the table!
+
+
+slightly advanced filter using indexes to slice the data:
+
+scan 'current_conditions', {'LIMIT' => 10, STARTROW => '15#S#1', ENDROW => '15#S#999', COLUMN => 'lane:speed'}
+
