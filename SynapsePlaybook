@@ -1,0 +1,147 @@
+Use SQL Serverless pool for following exercise:
+
+1) read data
+
+SELECT
+    TOP 100 *
+FROM
+    OPENROWSET(
+        BULK 'https://contosolake.dfs.core.windows.net/users/NYCTripSmall.parquet',
+        FORMAT='PARQUET'
+    ) AS [result]
+    
+    
+    
+2) Create data exploration database
+
+
+CREATE DATABASE DataExplorationDB 
+                COLLATE Latin1_General_100_BIN2_UTF8  
+    
+    
+    
+ 
+ 
+ 3) Switch the database context from master to DataExplorationDB using the following command. You can also use the UI control use database to switch your current database
+ 
+ 
+ USE DataExplorationDB
+ 
+ 
+ 
+ 4) From DataExplorationDB, create utility objects such as credentials and data sources.
+ 
+ CREATE EXTERNAL DATA SOURCE ContosoLake
+WITH ( LOCATION = 'https://contosolake.dfs.core.windows.net')
+
+
+
+5) use the newly created DataExplorationDB database to create a login for a user in DataExplorationDB that will access external data:
+
+CREATE LOGIN data_explorer WITH PASSWORD = 'My Very Strong Password 1234!';
+
+
+6) Next create a database user in DataExplorationDB for the above login and grant the ADMINISTER DATABASE BULK OPERATIONS permission.
+
+
+CREATE USER data_explorer FOR LOGIN data_explorer;
+GO
+GRANT ADMINISTER DATABASE BULK OPERATIONS TO data_explorer;
+GO
+
+
+7) Explore the content of the file using the relative path and the data source
+
+
+SELECT
+    TOP 100 *
+FROM
+    OPENROWSET(
+            BULK '/users/NYCTripSmall.parquet',
+            DATA_SOURCE = 'ContosoLake',
+            FORMAT='PARQUET'
+    ) AS [result]
+    
+    
+    
+8)Publish your changes to the workspace!
+
+
+
+
+
+
+
+
+Use Spark pool for following exercise:
+
+
+Create a serverless Apache Spark pool
+In Synapse Studio, on the left-side pane, select Manage > Apache Spark pools.
+Select New
+For Apache Spark pool name enter Spark1.
+For Node size enter Small.
+For Number of nodes Set the minimum to 3 and the maximum to 3
+Select Review + create > Create. Your Apache Spark pool will be ready in a few seconds.
+
+IMPORTANT: Upload the Taxi Green Trip Dataset on your data lake (DATA CONTAINER or whichever container loaded into Synapse)
+
+https://github.com/a-forty-two/OptumBigData-Feb-23/blob/main/NYCTripSmall.parquet
+
+
+In Synapse Studio, go to the Develop hub.
+
+Create a new notebook.
+
+Create a new code cell and paste the following code in that cell:
+Modify the load URI, so it references the sample file in your storage account 
+
+
+%%pyspark
+df = spark.read.load('abfss://users@contosolake.dfs.core.windows.net/NYCTripSmall.parquet', format='parquet')
+display(df.limit(10))
+
+
+Check out the schema:
+
+%%pyspark
+df.printSchema()
+
+
+
+
+Create Database in SQL:
+
+%%pyspark
+spark.sql("CREATE DATABASE IF NOT EXISTS nyctaxi")
+df.write.mode("overwrite").saveAsTable("nyctaxi.trip")
+
+
+
+Analyze the data:
+
+%%pyspark
+df = spark.sql("SELECT * FROM nyctaxi.trip") 
+display(df)
+
+
+
+
+
+
+
+%%pyspark
+df = spark.sql("""
+   SELECT passenger_count,
+       SUM(trip_distance) as SumTripDistance,
+       AVG(trip_distance) as AvgTripDistance
+   FROM nyctaxi.trip
+   WHERE trip_distance > 0 AND passenger_count > 0
+   GROUP BY passenger_count
+   ORDER BY passenger_count
+""") 
+display(df)
+df.write.saveAsTable("nyctaxi.passengercountstats")
+
+
+
