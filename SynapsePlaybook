@@ -1,5 +1,9 @@
 Use SQL Serverless pool for following exercise:
 
+IMPORTANT: Upload the Taxi Green Trip Dataset on your data lake (DATA CONTAINER or whichever container loaded into Synapse)
+
+https://github.com/a-forty-two/OptumBigData-Feb-23/blob/main/NYCTripSmall.parquet
+
 1) read data
 
 SELECT
@@ -84,9 +88,7 @@ For Node size enter Small.
 For Number of nodes Set the minimum to 3 and the maximum to 3
 Select Review + create > Create. Your Apache Spark pool will be ready in a few seconds.
 
-IMPORTANT: Upload the Taxi Green Trip Dataset on your data lake (DATA CONTAINER or whichever container loaded into Synapse)
 
-https://github.com/a-forty-two/OptumBigData-Feb-23/blob/main/NYCTripSmall.parquet
 
 
 In Synapse Studio, go to the Develop hub.
